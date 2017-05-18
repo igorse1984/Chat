@@ -1,0 +1,22 @@
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+
+<?import javafx.scene.control.PasswordField?>
+<VBox fx:controller="ru.geekbrains.chat.client.Controller"
+      xmlns:fx="http://javafx.com/fxml" alignment="center">
+    <HBox fx:id="loginPanel">
+        <TextField fx:id="loginField" promptText="Логин" HBox.hgrow="ALWAYS"/>
+        <PasswordField fx:id="passField" promptText="Пароль" onAction="#sendAuth" HBox.hgrow="ALWAYS"/>
+        <Button fx:id="btnLogin" text="Авторизация" onAction="#sendAuth"/>
+    </HBox>
+    <TextArea fx:id="textArea" editable="false" VBox.vgrow="ALWAYS"/>
+    <HBox fx:id="msgPanel">
+        <TextField fx:id="textField" onAction="#sendMsg" HBox.hgrow="ALWAYS"/>
+        <Button text="Отправить" onAction="#sendMsg"/>
+    </HBox>
+</VBox>
