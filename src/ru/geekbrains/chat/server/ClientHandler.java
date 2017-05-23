@@ -36,18 +36,16 @@ public class ClientHandler {
             // зная сокет, создаем сетевые потоки ввода-вывода
             this.in = new DataInputStream(socket.getInputStream());
             this.out = new DataOutputStream(socket.getOutputStream());
-
             // создаем отдельный поток обработки сетевых событий
             new Thread(() -> {
                 try {
                     String msg = null;
 
-
                     // цикл авторизации клиента на сервере
                     while (true) {
                         // ставим таймаут сокету
-                        socket.setSoTimeout(10000);
 
+                        socket.setSoTimeout(10000);
                         // получаем строку из входящего потока
                         msg = in.readUTF(); // приостанавливает цикл до момента получения данных
 
@@ -73,6 +71,7 @@ public class ClientHandler {
                                     // подписка на рассылку чата
                                     server.subscribe(this);
                                     // прерываем цикл авторизации пока не произойдет авторизация
+                                    socket.setSoTimeout(0);
                                     break;
                                 } else {
                                     sendMsg("Учетная запись уже используется");

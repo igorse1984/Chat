@@ -33,6 +33,7 @@ public class Controller implements Initializable {
     private boolean isAuthorized;
     private String myNick;
 
+    // переводит окно в режим авторизации и обратно
     public void setIsAuthorized(boolean value) {
         // знание о собственном статусе авторизации
         isAuthorized = value;
@@ -59,8 +60,6 @@ public class Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         // по-умолчанию при запуске клиента
         setIsAuthorized(false);
-
-
     }
 
     public void connect() {
@@ -124,7 +123,7 @@ public class Controller implements Initializable {
         }
     }
 
-    // отправка данных формы авторизации
+    // по нажатию кнопки, отправка данных формы авторизации на сервер
     public void sendAuth() {
         try {
             if (socket == null || socket.isClosed())
@@ -138,7 +137,7 @@ public class Controller implements Initializable {
         }
     }
 
-    // отправка сообщений от клиента по кнопке
+    // по нажатию кнопки, отправка сообщений от клиента на сервер
     public void sendMsg() {
         try {
             out.writeUTF(textField.getText());

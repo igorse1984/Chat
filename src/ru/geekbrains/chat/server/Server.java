@@ -24,7 +24,7 @@ public class Server {
         authService = new DBAuthService();
 
         // новый экземпляр сервера сокетов на вручную указанном порту
-        try (ServerSocket server = new ServerSocket(8189);) {
+        try (ServerSocket server = new ServerSocket(8189)) {
 
             // старт базы
             authService.start();
