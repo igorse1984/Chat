@@ -119,6 +119,7 @@ public class Controller implements Initializable {
             inputThread.setDaemon(true);
             inputThread.start();
         } catch (IOException e) {
+            System.out.println("Проблема на стороне клиента");
             e.printStackTrace();
         }
     }

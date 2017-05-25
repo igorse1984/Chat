@@ -1,0 +1,17 @@
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+
+<?import javafx.scene.control.PasswordField?>
+<VBox fx:controller="ru.geekbrains.chat.server.Controller"
+      xmlns:fx="http://javafx.com/fxml" alignment="center">
+    <HBox fx:id="ButtonPanel">
+        <Button text="Вкл" onAction="#online"/>
+        <Button text="Выкл" onAction="#offline"/>
+    </HBox>
+
+</VBox>

@@ -10,40 +10,66 @@ public class Server {
     private Vector<ClientHandler> clients;
     // интерфейс объявляем за зачем?
     private DBAuthService authService;
+    private ServerSocket srv;
+    private Socket socket;
 
     // возвращает созданный экземпляр класса взаимодействия с базой
     public DBAuthService getAuthService() {
         return authService;
     }
 
-    // констуктор
+    // конструктор
     public Server() {
         // создаем экземпляр хранилища обработчиков
         clients = new Vector<>();
         // создаем экземпляр класса авторизации через базу
         authService = new DBAuthService();
 
-        // новый экземпляр сервера сокетов на вручную указанном порту
-        try (ServerSocket server = new ServerSocket(8189)) {
+        Thread th = new Thread(() -> {
+            // новый экземпляр сервера сокетов на вручную указанном порту
+            try (ServerSocket server = new ServerSocket(8189)) {
 
-            // старт базы
-            authService.start();
-            System.out.println("Server started. Waiting for clients...");
+                // дублируем адрес ссылки на сервер для будущих обращений вне конструктора
+                srv = server;
+                // старт базы
+                authService.start();
+                System.out.println("Server started. Waiting for clients...");
 
-            while (true) {
-                // ожидание подключения клиента с одновременым получения адреса сокета
-                Socket socket = server.accept();
-                // делаем экземпляр класса обработчика каждому подключенному клиенту
-                new ClientHandler(this, socket);
-                System.out.println("Client connected");
+                while (true) {
+                    // ожидание подключения клиента с одновременым получения адреса сокета
+                    socket = server.accept();
+                    // делаем экземпляр класса обработчика каждому подключенному клиенту
+                    new ClientHandler(this, socket);
+                    System.out.println("Client connected");
+                }
+
+            } catch (AuthServiceException e) {
+                System.out.println("SrvExc1");
+//                e.printStackTrace();
+            } catch (IOException e) {
+                System.out.println("SrvExc2");
+//                e.printStackTrace();
+            } finally {
+                // закрытие базы
+                authService.stop();
+                System.out.println("База данных закрыта");
             }
-        } catch (AuthServiceException e) {
-            e.printStackTrace();
+        });
+//        th.setDaemon(true);
+        th.start();
+    }
+
+
+    public void stopServer() {
+        try {
+            for (ClientHandler o : clients) {
+                unsubscribe(o);
+            }
+            srv.close();
+            System.out.println("Server is stopped.");
         } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            // закрытие базы
-            authService.stop();
+            System.out.println("SrvExc3");
+//            e.printStackTrace();
         }
     }
 
