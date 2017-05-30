@@ -8,7 +8,7 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
 /**
- * Обработчик сетевых запросов
+ * Обработчик клиентских сетевых запросов
  * кол-во экземпляров класса равно кол-ву подключенных клиентов
  */
 

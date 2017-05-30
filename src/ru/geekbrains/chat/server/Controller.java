@@ -10,17 +10,18 @@ import java.util.ResourceBundle;
 public class Controller implements Initializable {
 
     Server srv;
+    Thread th;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-//        new Thread(() -> {
-        srv = new Server();
-//        }).start();
     }
 
     // по нажатию кнопки
     public void online() {
-        srv = new Server();
+        th = new Thread(() -> {
+            srv = new Server();
+        });
+        th.start();
     }
 
     // по нажатию кнопки остановка сервера
